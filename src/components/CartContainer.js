@@ -1,5 +1,6 @@
 import React from "react";
 import CartItem from "./CartItem";
+
 const CartContainer = ({ cart = [] }) => {
   if (cart.length === 0) {
     return (
