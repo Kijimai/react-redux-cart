@@ -1,6 +1,6 @@
 import React from "react"
 import { connect } from "react-redux"
-import { ACTIONS } from "../actions"
+import { ACTIONS, removeItem, increaseAmount, decreaseAmount } from "../actions"
 
 const CartItem = ({
   img,
@@ -10,6 +10,7 @@ const CartItem = ({
   remove,
   increase,
   decrease,
+  toggle,
 }) => {
   return (
     <div className="cart-item">
@@ -24,7 +25,7 @@ const CartItem = ({
       </div>
       <div>
         {/* increase amount */}
-        <button onClick={increase} className="amount-btn">
+        <button onClick={() => toggle("increase")} className="amount-btn">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
             <path d="M10.707 7.05L10 6.343 4.343 12l1.414 1.414L10 9.172l4.243 4.242L15.657 12z" />
           </svg>
@@ -37,7 +38,7 @@ const CartItem = ({
             if (amount === 1) {
               return remove()
             }
-            return decrease()
+            return toggle("decrease")
           }}
           className="amount-btn"
         >
@@ -54,11 +55,11 @@ const mapDispatchToProps = (dispatch, ownProps) => {
   const { amount, id } = ownProps
   // returns a function we can get access to via the global Provider
   return {
-    remove: () => dispatch({ type: ACTIONS.REMOVE, payload: { id } }),
-    increase: () =>
-      dispatch({ type: ACTIONS.INCREASE, payload: { id, amount } }),
-    decrease: () =>
-      dispatch({ type: ACTIONS.DECREASE, payload: { id, amount } }),
+    remove: () => dispatch(removeItem),
+    increase: () => dispatch(increaseAmount),
+    decrease: () => dispatch(decreaseAmount),
+    toggle: (toggle) =>
+      dispatch({ type: ACTIONS.TOGGLE_AMOUNT, payload: { id, toggle } }),
   }
 }
 

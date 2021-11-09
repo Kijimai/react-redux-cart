@@ -3,7 +3,6 @@ import React from "react"
 import Navbar from "./components/Navbar"
 import CartContainer from "./components/CartContainer"
 // items
-import cartItems from "./cart-items"
 
 import reducer from "./reducer"
 import { createStore } from "redux"
@@ -13,13 +12,9 @@ import { Provider } from "react-redux"
 //DO NOT MUTATE THE STATE - redux is built on immutability (copy)
 
 //initial store / state
-const initialStore = {
-  cart: cartItems,
-  total: 105,
-  amount: 5,
-}
 
-const store = createStore(reducer, initialStore)
+
+const store = createStore(reducer)
 function App() {
   // cart setup
 
