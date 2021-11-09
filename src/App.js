@@ -4,25 +4,30 @@ import Navbar from "./components/Navbar"
 import CartContainer from "./components/CartContainer"
 // items
 import cartItems from "./cart-items"
-// redux stuff
 
+import reducer from "./reducer"
 import { createStore } from "redux"
+import { Provider } from "react-redux"
+//dispatch method - send actions to the store
+//actions (objects) - MUST HAVE TYPE PROPERTY! - What kind of action are you doing?
+//DO NOT MUTATE THE STATE - redux is built on immutability (copy)
 
-//reducer
-function reducer() {
-  console.log("reducer")
+//initial store / state
+const initialStore = {
+  cart: cartItems,
+  total: 105,
+  amount: 5,
 }
 
-const store = createStore(reducer)
-
+const store = createStore(reducer, initialStore)
 function App() {
   // cart setup
 
   return (
-    <main>
+    <Provider store={store}>
       <Navbar />
-      <CartContainer cart={cartItems} />
-    </main>
+      <CartContainer />
+    </Provider>
   )
 }
 
