@@ -5,21 +5,12 @@ function reducer(state, action) {
 
   switch (action.type) {
     case ACTIONS.DECREASE:
-      tempCart = []
-      if (action.payload.amount === 1) {
-        console.log(`it's one!`)
-        return {
-          ...state,
-          cart: state.cart.filter((item) => item.id !== action.payload.id),
+      tempCart = state.cart.map((item) => {
+        if (item.id === action.payload.id) {
+          item = { ...item, amount: item.amount - 1 }
         }
-      } else {
-        tempCart = state.cart.map((item) => {
-          if (item.id === action.payload.id) {
-            item = { ...item, amount: item.amount - 1 }
-          }
-          return item
-        })
-      }
+        return item
+      })
       return { ...state, cart: tempCart }
     case ACTIONS.INCREASE:
       tempCart = state.cart.map((item) => {
@@ -38,7 +29,6 @@ function reducer(state, action) {
         cart: state.cart.filter((item) => item.id !== action.payload.id),
       }
     case ACTIONS.GET_TOTALS:
-      console.log("totaling!")
       let { total, amount } = state.cart.reduce(
         (cartTotal, cartItem) => {
           const { price, amount } = cartItem
